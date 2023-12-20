@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  ftp-server:
+    image: stilliard/pure-ftpd
+#    ports:
+#      - "21:21"
+#      - "30000-30009:30000-30009"
+    volumes:
+      # Mount for uploaded data
+      - "./ftp-mounts/data/:/home/prototype/"
+      # Mount SSL keys for TLS
+      - "./ftp-mounts/ssl/:/etc/ssl/private/"
+    environment:
+      PUBLICHOST: "localhost"
+      FTP_USER_NAME: prototype
+      FTP_USER_PASS: mypass
+      FTP_USER_HOME: /home/prototype
+      # Enable TLS
+      ADDED_FLAGS: "--tls=2"
+
+  uploader:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    depends_on:
+      ftp-server:
+        condition: service_started
