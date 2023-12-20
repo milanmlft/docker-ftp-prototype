@@ -3,6 +3,7 @@ version: "3.8"
 services:
   ftp-server:
     image: stilliard/pure-ftpd
+    # Can map ports if you want to access this outside of a docker network
 #    ports:
 #      - "21:21"
 #      - "30000-30009:30000-30009"
