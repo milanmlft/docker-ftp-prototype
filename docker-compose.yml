@@ -2,9 +2,7 @@ version: "3.8"
 
 services:
   ftp-server:
-    build:
-      dockerfile: Dockerfile
-      context: ftp-server
+    image: delfer/alpine-ftp-server
     ports:
       - "21:21"
       - "21000-21010:21000-21010"
@@ -16,6 +14,9 @@ services:
     environment:
       USERS: "prototype|mypass"
       ADDRESS: "localhost"
+      TLS_CERT: "/etc/ssl/private/localhost.crt"
+      TLS_KEY: "/etc/ssl/private/localhost.key"
+
 
   uploader:
     build:
