@@ -35,6 +35,8 @@ def _connect_to_sftp() -> FTP_TLS:
     ftp = FTP_TLS()
     ftp.connect(ftp_host, ftp_port)
     ftp.login(ftp_user, ftp_password)
+    # Switch to secure data connection
+    ftp.prot_p()
     return ftp
 
 
