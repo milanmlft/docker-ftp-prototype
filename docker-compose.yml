@@ -2,23 +2,20 @@ version: "3.8"
 
 services:
   ftp-server:
-    image: stilliard/pure-ftpd
-    # Can map ports if you want to access this outside of a docker network
-#    ports:
-#      - "21:21"
-#      - "30000-30009:30000-30009"
+    build:
+      dockerfile: Dockerfile
+      context: ftp-server
+    ports:
+      - "21:21"
+      - "21000-21010:21000-21010"
     volumes:
       # Mount for uploaded data
       - "./ftp-mounts/data/:/home/prototype/"
       # Mount SSL keys for TLS
       - "./ftp-mounts/ssl/:/etc/ssl/private/"
     environment:
-      PUBLICHOST: "localhost"
-      FTP_USER_NAME: prototype
-      FTP_USER_PASS: mypass
-      FTP_USER_HOME: /home/prototype
-      # Enable TLS
-      ADDED_FLAGS: "--tls=2"
+      USERS: "prototype|mypass"
+      ADDRESS: "localhost"
 
   uploader:
     build:
